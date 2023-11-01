@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LSMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BookDetails">
+    <Key>
+      <PropertyRef Name="bookId" />
+    </Key>
+    <Property Name="bookId" Type="int" Nullable="false" />
+    <Property Name="bookName" Type="varchar" MaxLength="10" />
+    <Property Name="Author" Type="varchar" MaxLength="10" />
+    <Property Name="Availability" Type="int" />
+  </EntityType>
+  <EntityType Name="bookLend">
+    <Key>
+      <PropertyRef Name="bookingId" />
+    </Key>
+    <Property Name="bookingId" Type="int" Nullable="false" />
+    <Property Name="bookId" Type="int" />
+    <Property Name="customerId" Type="int" />
+    <Property Name="returnStatus" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="customerDetails">
+    <Key>
+      <PropertyRef Name="customerId" />
+    </Key>
+    <Property Name="customerId" Type="int" Nullable="false" />
+    <Property Name="customerName" Type="varchar" MaxLength="10" />
+    <Property Name="email" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK__bookLend__bookId__3B75D760">
+    <End Role="BookDetails" Type="Self.BookDetails" Multiplicity="0..1" />
+    <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookDetails">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="bookLend">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bookLend__custom__3C69FB99">
+    <End Role="customerDetails" Type="Self.customerDetails" Multiplicity="0..1" />
+    <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customerDetails">
+        <PropertyRef Name="customerId" />
+      </Principal>
+      <Dependent Role="bookLend">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LSMModelStoreContainer">
+    <EntitySet Name="BookDetails" EntityType="Self.BookDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="bookLend" EntityType="Self.bookLend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customerDetails" EntityType="Self.customerDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__bookLend__bookId__3B75D760" Association="Self.FK__bookLend__bookId__3B75D760">
+      <End Role="BookDetails" EntitySet="BookDetails" />
+      <End Role="bookLend" EntitySet="bookLend" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bookLend__custom__3C69FB99" Association="Self.FK__bookLend__custom__3C69FB99">
+      <End Role="customerDetails" EntitySet="customerDetails" />
+      <End Role="bookLend" EntitySet="bookLend" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

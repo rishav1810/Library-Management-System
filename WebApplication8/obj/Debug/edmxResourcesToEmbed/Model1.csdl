@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LSMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BookDetail">
+    <Key>
+      <PropertyRef Name="bookId" />
+    </Key>
+    <Property Name="bookId" Type="Int32" Nullable="false" />
+    <Property Name="bookName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Author" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Availability" Type="Int32" />
+  </EntityType>
+  <EntityType Name="bookLend">
+    <Key>
+      <PropertyRef Name="bookingId" />
+    </Key>
+    <Property Name="bookingId" Type="Int32" Nullable="false" />
+    <Property Name="bookId" Type="Int32" />
+    <Property Name="customerId" Type="Int32" />
+    <Property Name="returnStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="customerDetail">
+    <Key>
+      <PropertyRef Name="customerId" />
+    </Key>
+    <Property Name="customerId" Type="Int32" Nullable="false" />
+    <Property Name="customerName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__bookLend__bookId__3B75D760">
+    <End Role="BookDetails" Type="Self.BookDetail" Multiplicity="0..1" />
+    <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookDetails">
+        <PropertyRef Name="bookId" />
+      </Principal>
+      <Dependent Role="bookLend">
+        <PropertyRef Name="bookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bookLend__custom__3C69FB99">
+    <End Role="customerDetails" Type="Self.customerDetail" Multiplicity="0..1" />
+    <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customerDetails">
+        <PropertyRef Name="customerId" />
+      </Principal>
+      <Dependent Role="bookLend">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LSMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BookDetails" EntityType="Self.BookDetail" />
+    <EntitySet Name="bookLends" EntityType="Self.bookLend" />
+    <EntitySet Name="customerDetails" EntityType="Self.customerDetail" />
+    <AssociationSet Name="FK__bookLend__bookId__3B75D760" Association="Self.FK__bookLend__bookId__3B75D760">
+      <End Role="BookDetails" EntitySet="BookDetails" />
+      <End Role="bookLend" EntitySet="bookLends" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bookLend__custom__3C69FB99" Association="Self.FK__bookLend__custom__3C69FB99">
+      <End Role="customerDetails" EntitySet="customerDetails" />
+      <End Role="bookLend" EntitySet="bookLends" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

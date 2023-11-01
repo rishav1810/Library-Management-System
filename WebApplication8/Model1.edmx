@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LSMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BookDetails">
+          <Key>
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="bookId" Type="int" Nullable="false" />
+          <Property Name="bookName" Type="varchar" MaxLength="10" />
+          <Property Name="Author" Type="varchar" MaxLength="10" />
+          <Property Name="Availability" Type="int" />
+        </EntityType>
+        <EntityType Name="bookLend">
+          <Key>
+            <PropertyRef Name="bookingId" />
+          </Key>
+          <Property Name="bookingId" Type="int" Nullable="false" />
+          <Property Name="bookId" Type="int" />
+          <Property Name="customerId" Type="int" />
+          <Property Name="returnStatus" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="customerDetails">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="int" Nullable="false" />
+          <Property Name="customerName" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__bookLend__bookId__3B75D760">
+          <End Role="BookDetails" Type="Self.BookDetails" Multiplicity="0..1" />
+          <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookDetails">
+              <PropertyRef Name="bookId" />
+            </Principal>
+            <Dependent Role="bookLend">
+              <PropertyRef Name="bookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bookLend__custom__3C69FB99">
+          <End Role="customerDetails" Type="Self.customerDetails" Multiplicity="0..1" />
+          <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customerDetails">
+              <PropertyRef Name="customerId" />
+            </Principal>
+            <Dependent Role="bookLend">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LSMModelStoreContainer">
+          <EntitySet Name="BookDetails" EntityType="Self.BookDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bookLend" EntityType="Self.bookLend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customerDetails" EntityType="Self.customerDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__bookLend__bookId__3B75D760" Association="Self.FK__bookLend__bookId__3B75D760">
+            <End Role="BookDetails" EntitySet="BookDetails" />
+            <End Role="bookLend" EntitySet="bookLend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bookLend__custom__3C69FB99" Association="Self.FK__bookLend__custom__3C69FB99">
+            <End Role="customerDetails" EntitySet="customerDetails" />
+            <End Role="bookLend" EntitySet="bookLend" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LSMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BookDetail">
+          <Key>
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="bookId" Type="Int32" Nullable="false" />
+          <Property Name="bookName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Author" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Availability" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bookLend">
+          <Key>
+            <PropertyRef Name="bookingId" />
+          </Key>
+          <Property Name="bookingId" Type="Int32" Nullable="false" />
+          <Property Name="bookId" Type="Int32" />
+          <Property Name="customerId" Type="Int32" />
+          <Property Name="returnStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="customerDetail">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="Int32" Nullable="false" />
+          <Property Name="customerName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__bookLend__bookId__3B75D760">
+          <End Role="BookDetails" Type="Self.BookDetail" Multiplicity="0..1" />
+          <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BookDetails">
+              <PropertyRef Name="bookId" />
+            </Principal>
+            <Dependent Role="bookLend">
+              <PropertyRef Name="bookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bookLend__custom__3C69FB99">
+          <End Role="customerDetails" Type="Self.customerDetail" Multiplicity="0..1" />
+          <End Role="bookLend" Type="Self.bookLend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customerDetails">
+              <PropertyRef Name="customerId" />
+            </Principal>
+            <Dependent Role="bookLend">
+              <PropertyRef Name="customerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LSMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BookDetails" EntityType="Self.BookDetail" />
+          <EntitySet Name="bookLends" EntityType="Self.bookLend" />
+          <EntitySet Name="customerDetails" EntityType="Self.customerDetail" />
+          <AssociationSet Name="FK__bookLend__bookId__3B75D760" Association="Self.FK__bookLend__bookId__3B75D760">
+            <End Role="BookDetails" EntitySet="BookDetails" />
+            <End Role="bookLend" EntitySet="bookLends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bookLend__custom__3C69FB99" Association="Self.FK__bookLend__custom__3C69FB99">
+            <End Role="customerDetails" EntitySet="customerDetails" />
+            <End Role="bookLend" EntitySet="bookLends" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LSMModelStoreContainer" CdmEntityContainer="LSMEntities">
+          <EntitySetMapping Name="BookDetails">
+            <EntityTypeMapping TypeName="LSMModel.BookDetail">
+              <MappingFragment StoreEntitySet="BookDetails">
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+                <ScalarProperty Name="bookName" ColumnName="bookName" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Availability" ColumnName="Availability" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bookLends">
+            <EntityTypeMapping TypeName="LSMModel.bookLend">
+              <MappingFragment StoreEntitySet="bookLend">
+                <ScalarProperty Name="returnStatus" ColumnName="returnStatus" />
+                <ScalarProperty Name="bookingId" ColumnName="bookingId" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customerDetails">
+            <EntityTypeMapping TypeName="LSMModel.customerDetail">
+              <MappingFragment StoreEntitySet="customerDetails">
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
